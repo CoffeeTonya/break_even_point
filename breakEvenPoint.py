@@ -30,9 +30,9 @@ else:
     breakEvenPoint = 0
 
 st.title('損益分岐点計算')
-st.subheader('損益分岐点は ' + str(breakEvenPoint) + ' です')
+st.text('損益分岐点は ' + str(breakEvenPoint) + ' です')
 
-st.subheader('完売時の合計')
+st.text('完売時の合計')
 col7, col8, col9 = st.beta_columns(3)
 with col7:
     costTotal = st.info('仕入金額：' + str("{:,}".format(cost * amount)) + '円')
@@ -71,7 +71,7 @@ dfTable = {
 df = pd.DataFrame(dfChart)
 df_ = pd.DataFrame(dfTable)
 
-st.subheader('推移グラフ')
+st.text('推移グラフ')
 st.line_chart(df)
-st.subheader('推移一覧表')
+st.text('推移一覧表')
 st.table(df_.set_index('販売数量'))
