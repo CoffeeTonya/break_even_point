@@ -5,7 +5,6 @@ import pandas as pd
 import datetime
 import time
 import math
-import matplotlib.pyplot as plt
 
 from streamlit.proto.Checkbox_pb2 import Checkbox
 
