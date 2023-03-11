@@ -18,8 +18,6 @@ if st.sidebar.button('軽減税率対象'):
 else:
     tax = 0.10
 
-st.sidebar.write("""* * *""")
-
 varriableCost1 = st.sidebar.number_input('★変動費1/個（円）',  min_value=0, max_value=99999999, step=1)
 varriableCost2 = st.sidebar.number_input('★変動費2/個（円）',  min_value=0, max_value=99999999, step=1)
 varriableCost3 = st.sidebar.number_input('★変動費3/個（円）',  min_value=0, max_value=99999999, step=1)
