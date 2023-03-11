@@ -17,6 +17,8 @@ if st.sidebar.button('軽減税率対象'):
     tax = 0.08
 else:
     tax = 0.10
+    
+st.write("""* * *""")
 
 varriableCost1 = st.sidebar.number_input('★変動費1/個（円）',  min_value=0, max_value=99999999, step=1)
 varriableCost2 = st.sidebar.number_input('★変動費2/個（円）',  min_value=0, max_value=99999999, step=1)
@@ -68,7 +70,6 @@ dfTable = {
 df = pd.DataFrame(dfChart)
 df_ = pd.DataFrame(dfTable)
 
-st.write("* * *")
 st.subheader('推移グラフ')
 st.line_chart(df)
 st.subheader('損益分岐点は ' + str(breakEvenPoint) + ' です')
