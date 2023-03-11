@@ -72,7 +72,7 @@ df_ = pd.DataFrame(dfTable)
 
 st.subheader('推移グラフ')
 st.line_chart(df)
-st.info('損益分岐点は ' + str(breakEvenPoint) + ' です')
+st.error('損益分岐点は ' + str(breakEvenPoint) + ' です')
 st.write("* * *")
 st.subheader('推移一覧表')
 st.table(df_.set_index('販売数量'))
