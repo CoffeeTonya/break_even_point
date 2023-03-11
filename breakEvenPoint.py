@@ -49,12 +49,12 @@ profitLoss = []
 for i in range(0, amount + 1):
     units.append(i)
     costs_ = (math.floor((cost * (1 + tax)) * amount) + (i * varriableCost1) + (i * varriableCost2) + (i * selling * varriableCost3/100))
-    costs.append(costs_)
-    sellings.append(i * selling)
+    costs.append(round(costs_))
+    sellings.append(round(i * selling))
     profits.append(i * round(selling - (cost * (1 + tax))))
 
 for i in range(len(costs)):
-    tmp = sellings[i] - costs[i]
+    tmp = round(sellings[i] - costs[i])
     profitLoss.append(tmp)
 
 dfChart = {
