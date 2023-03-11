@@ -30,7 +30,6 @@ else:
     breakEvenPoint = 0
 
 st.title('損益分岐点計算')
-st.subheader('損益分岐点は ' + str(breakEvenPoint) + ' です')
 
 st.subheader('完売時の合計')
 col7, col8, col9 = st.beta_columns(3)
@@ -73,5 +72,7 @@ df_ = pd.DataFrame(dfTable)
 
 st.subheader('推移グラフ')
 st.line_chart(df)
+st.subheader('損益分岐点は ' + str(breakEvenPoint) + ' です')
+
 st.subheader('推移一覧表')
 st.table(df_.set_index('販売数量'))
