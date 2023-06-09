@@ -17,7 +17,7 @@ if st.sidebar.button('軽減税率対象'):
     tax = 0.08
 else:
     tax = 0.10
-    
+
 st.sidebar.write("""* * *""")
 
 varriableCost1 = st.sidebar.number_input('★変動費1/個（円）',  min_value=0, max_value=99999999, step=1)
@@ -30,9 +30,10 @@ else:
     breakEvenPoint = 0
 
 st.title('損益分岐点計算')
+st.subheader('損益分岐点は ' + str(breakEvenPoint) + ' です')
 
 st.subheader('完売時の合計')
-col7, col8, col9 = st.beta_columns(3)
+col7, col8, col9 = st.columns(3)
 with col7:
     costTotal = st.info('仕入金額：' + str("{:,}".format(cost * amount)) + '円')
 with col8:
@@ -72,7 +73,5 @@ df_ = pd.DataFrame(dfTable)
 
 st.subheader('推移グラフ')
 st.line_chart(df)
-st.info('損益分岐点 = ' + str(breakEvenPoint))
-st.write("* * *")
 st.subheader('推移一覧表')
 st.table(df_.set_index('販売数量'))
