@@ -15,16 +15,20 @@ selling = st.sidebar.number_input('③税込売価（円）',  min_value=0, max_
 
 st.sidebar.write("""* * *""")
 
-if st.sidebar.button('軽減税率対象'):
+tax_ = st.sidebar.selectbox('税率区分', ['軽減税率', '課税', '非課税'])
+
+if tax_ == '軽減税率':
     tax = 0.08
-else:
+elif tax_ == '課税':
     tax = 0.10
+else:
+    tax = 0
 
-rank = st.sidebar.selectbox('送料区分', ['送料別', '送料無料', 'メール便無料'])
+ships_ = st.sidebar.selectbox('送料区分', ['送料別', '送料無料', 'メール便無料'])
 
-if rank == '送料別':
+if ships_ == '送料別':
     ships = 0
-elif rank == '送料無料':
+elif ships_ == '送料無料':
     ships = 550
 else:
     ships = 180
@@ -66,7 +70,7 @@ profits = []
 profitLoss = []
 for i in range(0, amount + 1):
     units.append(i)
-    costs_ = (math.floor((cost * (1 + tax)) * amount) + (i * varriableCost1) + (i * varriableCost2) + (i * selling * varriableCost3/100) + (i * commission) + (i * ships))
+    costs_ = math.floor((i * varriableCost1) + (i * varriableCost2) + (i * selling * varriableCost3/100) + (i * commission) + (i * ships))
     costs.append(round(costs_))
     sellings.append(round(i * selling))
     profits.append(i * round(selling - (cost * (1 + tax))))
@@ -76,7 +80,8 @@ for i in range(len(costs)):
     profitLoss.append(tmp)
 
 dfChart = {
-    '仕入金額': costs,
+    '仕入金額': cost,
+    '販売経費': costs,
     '売上金額': sellings,
 }
 dfTable = {
