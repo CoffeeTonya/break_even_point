@@ -42,7 +42,7 @@ if cost != 0 and amount != 0 and selling != 0:
         ships = ship * i
         salesCosts = (selling * 0.1) * 0.1
         if (sales >= (totalCosts + ships + salesCosts)):
-            print(i)
+            breakEvenPoint = i
             break
 else:
     breakEvenPoint = 0
