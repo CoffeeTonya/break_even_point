@@ -13,7 +13,7 @@ cost = st.sidebar.number_input('①税抜原価（円）',  min_value=0, max_val
 amount = st.sidebar.number_input('②仕入数量（個）',  min_value=0, max_value=99999999, step=1)
 selling = st.sidebar.number_input('③税込売価（円）',  min_value=0, max_value=99999999, step=1)
 
-if st.sidebar.button('軽減税率対象'):
+if st.sidebar.button('軽減税率対象', '送料無料'):
     tax = 0.08
 else:
     tax = 0.10
