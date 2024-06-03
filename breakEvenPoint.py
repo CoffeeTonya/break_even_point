@@ -18,10 +18,10 @@ if st.sidebar.button('軽減税率対象'):
 else:
     tax = 0.10
 
-if st.sidebar.button('送料無料対象'):
-    ships = 550
-else:
-    ships = 0
+# if st.sidebar.button('送料無料対象'):
+#     ships = 550
+# else:
+#     ships = 0
 
 st.sidebar.write("""* * *""")
 
@@ -34,7 +34,7 @@ varriableCost2 = st.sidebar.number_input('★変動費2/個（円）',  min_valu
 varriableCost3 = st.sidebar.number_input('★変動費3/個（円）',  min_value=0, max_value=99999999, step=1)
 
 if cost != 0 and amount != 0 and selling != 0:
-    breakEvenPoint = math.ceil((((cost*amount)*(1+tax))+(varriableCost1*amount)+(varriableCost2*amount)+(varriableCost3*amount) + commission + ships)/(selling))
+    breakEvenPoint = math.ceil((((cost*amount)*(1+tax))+(varriableCost1*amount)+(varriableCost2*amount)+(varriableCost3*amount))/(selling))
 else:
     breakEvenPoint = 0
 
@@ -48,7 +48,7 @@ with col7:
 with col8:
     sellingTotal = st.info('売上金額：' + str("{:,}".format(selling * amount)) + '円')
 with col9:
-    profitTotal = st.info('粗利金額：' + str("{:,}".format((round(selling - ((cost * (1 + tax)) + (selling * (varriableCost3/100)) + (varriableCost1) + (varriableCost2) + commission + ships)) * amount))) + '円')
+    profitTotal = st.info('粗利金額：' + str("{:,}".format((round(selling - ((cost * (1 + tax)) + (selling * (varriableCost3/100)) + (varriableCost1) + (varriableCost2))) * amount))) + '円')
 
 units = []
 costs = []
@@ -57,7 +57,7 @@ profits = []
 profitLoss = []
 for i in range(0, amount + 1):
     units.append(i)
-    costs_ = (math.floor((cost * (1 + tax)) * amount) + (i * varriableCost1) + (i * varriableCost2) + (i * selling * varriableCost3/100) + commission + ships)
+    costs_ = (math.floor((cost * (1 + tax)) * amount) + (i * varriableCost1) + (i * varriableCost2) + (i * selling * varriableCost3/100))
     costs.append(round(costs_))
     sellings.append(round(i * selling))
     profits.append(i * round(selling - (cost * (1 + tax))))
