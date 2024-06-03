@@ -24,7 +24,7 @@ if rank == '送料別':
     ships = 0
 elif rank == '送料無料':
     ships = 550
-elif rank == 'メール便無料':
+else:
     ships = 180
 
 st.sidebar.write("""* * *""")
@@ -38,7 +38,7 @@ varriableCost2 = st.sidebar.number_input('★変動費2/個（円）',  min_valu
 varriableCost3 = st.sidebar.number_input('★変動費3/個（円）',  min_value=0, max_value=99999999, step=1)
 
 if cost != 0 and amount != 0 and selling != 0:
-    breakEvenPoint = math.ceil((((cost*amount)*(1+tax))+(varriableCost1*amount)+(varriableCost2*amount)+(varriableCost3*amount) + (ships)/(selling))
+    breakEvenPoint = math.ceil((((cost*amount)*(1+tax))+(varriableCost1*amount)+(varriableCost2*amount)+(varriableCost3*amount) + (ships))/(selling))
 else:
     breakEvenPoint = 0
 
