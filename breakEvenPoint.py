@@ -83,7 +83,7 @@ dfChart = {
     '売上金額': sellings,
 }
 dfTable = {
-    '販売数量': units,
+    '販売数量': str("{:,}".format(units)),
     '販売原価': costs,
     '売上金額': sellings,
     '粗利金額': profits,
