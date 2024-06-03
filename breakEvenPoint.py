@@ -60,7 +60,7 @@ with col7:
 with col8:
     sellingTotal = st.info('売上金額：' + str("{:,}".format(selling * amount)) + '円')
 with col9:
-    profitTotal = st.info('粗利金額：' + str("{:,}".format((round(selling - ((cost * (1 + tax)) + (selling * (varriableCost3)) + (varriableCost1) + (varriableCost2))) * amount))) + '円')
+    profitTotal = st.info('粗利金額：' + str("{:,}".format((round(selling - ((cost * (1 + tax)) + (selling * (varriableCost3)) + (varriableCost1) + (varriableCost2) + (ship) + (selling * sellingCost))) * amount))) + '円')
 
 units = []
 costs = []
