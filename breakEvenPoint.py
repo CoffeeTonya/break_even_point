@@ -79,7 +79,7 @@ for i in range(0, amount + 1):
     profits.append(i * round(selling - (cost * (1 + tax))))
 
 for i in range(len(costs)):
-    tmp = round(sellings[i] - costs[i])
+    tmp = round(sellings[i] - salesCosts[i])
     profitLoss.append(tmp)
 
 dfChart = {
