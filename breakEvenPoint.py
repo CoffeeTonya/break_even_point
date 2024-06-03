@@ -81,12 +81,12 @@ for i in range(len(costs)):
 
 dfChart = {
     '仕入金額': cost,
-    '販売経費': costs,
     '売上金額': sellings,
 }
 dfTable = {
     '販売数量': units,
-    '仕入金額': costs,
+    '仕入金額': cost*amount,
+    '販売経費': costs,
     '売上金額': sellings,
     '粗利金額': profits,
     '損益金額': profitLoss,
