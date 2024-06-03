@@ -24,7 +24,7 @@ if rank == '送料別':
     ships = 0
 elif rank == '送料無料':
     ships = 550
-else:
+elif rank == 'メール便無料':
     ships = 180
 
 st.sidebar.write("""* * *""")
