@@ -1,103 +1,90 @@
-import streamlit as st
+import datetime
+from glob import glob
+from altair.vegalite.v4.schema.core import DataFormat
 import numpy as np
-import datetime
 import pandas as pd
-import datetime
-import time
-import math
+import streamlit as st
 
-from streamlit.proto.Checkbox_pb2 import Checkbox
+# sidebar \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-st.sidebar.subheader('必要事項を入力')
-cost = st.sidebar.number_input('①税抜原価（円）',  min_value=0, max_value=99999999, step=1)
-amount = st.sidebar.number_input('②仕入数量（個）',  min_value=0, max_value=99999999, step=1)
-selling = st.sidebar.number_input('③税込売価（円）',  min_value=0, max_value=99999999, step=1)
-
-st.sidebar.write("""* * *""")
-
-tax_ = st.sidebar.selectbox('税率区分', ['軽減税率', '課税', '非課税'])
-
-if tax_ == '軽減税率':
-    tax = 0.08
-elif tax_ == '課税':
-    tax = 0.10
+item_code = st.sidebar.text_input('商品コード')
+item_name = st.sidebar.text_input('商品名')
+item_cost = st.sidebar.number_input('税抜原価', 0, step=1)
+item_price = st.sidebar.number_input('税込売価', 0, step=1)
+tax = st.sidebar.selectbox(
+    '税率区分',
+    ('8%', '10%'))
+if tax == '8%':
+    tax_ = 1.08
 else:
-    tax = 0
+    tax_ = 1.10
+valiable_cost = st.sidebar.number_input('変動費', 0, step=1)
+purchases = st.sidebar.number_input('仕入数', 0, step=1)
+case = st.sidebar.number_input('入数', 0, step=1)
+st.sidebar.markdown(rf'''
+<br>
+''', unsafe_allow_html=True)
+shipping = st.sidebar.checkbox('送料無料')
 
-ships_ = st.sidebar.selectbox('送料区分', ['送料別', '送料無料', 'メール便無料'])
-
-if ships_ == '送料別':
-    ships = 0
-elif ships_ == '送料無料':
-    ships = 550
+if shipping == True:
+    shipping = '無料'
+    shipping_cost = 550
 else:
-    ships = 180
+    shipping = '別'
+    shipping_cost = 0
 
-commission = selling * 0.1
-commission_ = st.sidebar.info('販売手数料：' + str("{:,}".format(commission)) + '円')
+# body \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-st.sidebar.write("""* * *""")
+# title
+st.title('損益計算ツール')
+st.markdown(rf'''
+<br>
+''', unsafe_allow_html=True)
+if item_code == '':
+    st.write('サイドバーの入力項目を入力してください')
 
+st.markdown(rf'''
+<br>
+''', unsafe_allow_html=True)
 
-varriableCost1 = st.sidebar.number_input('★変動費1/個（円）',  min_value=0, max_value=99999999, step=1)
-varriableCost2 = st.sidebar.number_input('★変動費2/個（円）',  min_value=0, max_value=99999999, step=1)
-varriableCost3 = st.sidebar.number_input('★変動費3/個（円）',  min_value=0, max_value=99999999, step=1)
+# item
+st.write('商品情報')
 
-if cost != 0 and amount != 0 and selling != 0:
-    breakEvenPoint = math.ceil((((cost*amount)*(1+tax))+(varriableCost1*amount)+(varriableCost2*amount)+(varriableCost3*amount)+(ships*amount)+(commission*amount))/(selling))
-else:
-    breakEvenPoint = 0
+st.markdown(rf'''
+    <table>
+        <tr>
+            <th>商品CD</th><th>品名</th><th>原価</th><th>売価</th><th>送料</th><th>税率</th>
+        </tr>
+        <tr>
+            <td>{item_code}</td><td>{item_name}</td><td>{"{:,}".format(item_cost)}</td><td>{"{:,}".format(item_price)}</td><td>{shipping}</td><td>{tax}</td>
+        </tr>
+    </table>
+    ''', unsafe_allow_html=True)
 
-st.title('損益分岐点計算')
-if breakEvenPoint - amount > 0:
-    st.subheader('損益分岐点はありません')
-else:
-    st.subheader('損益分岐点は ' + str(breakEvenPoint) + ' です')
+st.markdown(rf'''
+<br>
+''', unsafe_allow_html=True)
 
-st.subheader('完売時の合計')
-col7, col8, col9 = st.columns(3)
-with col7:
-    costTotal = st.info('仕入金額：' + str("{:,}".format(cost * amount)) + '円')
-with col8:
-    sellingTotal = st.info('売上金額：' + str("{:,}".format(selling * amount)) + '円')
-with col9:
-    profitTotal = st.info('粗利金額：' + str("{:,}".format((round(selling - ((cost * (1 + tax)) + (selling * (varriableCost3)) + (varriableCost1) + (varriableCost2) + (ships) + (commission))) * amount))) + '円')
+# pl_
+st.write('損益分岐表')
 
-units = []
-salesCosts = []
-costs = []
-sellings = []
-profits = []
-profitLoss = []
-for i in range(0, amount + 1):
-    units.append(i)
-    salesCosts_ = math.floor(((i * cost) * (1 + tax)) + (i * varriableCost1) + (i * varriableCost2) + (i * selling * varriableCost3) + (i * commission) + (i * ships))
-    salesCosts.append(round(salesCosts_))
-    costs_ = math.floor((i * varriableCost1) + (i * varriableCost2) + (i * selling * varriableCost3) + (i * commission) + (i * ships))
-    costs.append(round(costs_))
-    sellings.append(round(i * selling))
-    profits.append(i * round(selling - (cost * (1 + tax))))
+index1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-for i in range(len(costs)):
-    tmp = round(sellings[i] - salesCosts[i])
-    profitLoss.append(tmp)
+column1 = []
+column2 = []
+column3 = []
+column4 = []
 
-dfChart = {
-    '販売原価': salesCosts,
-    '売上金額': sellings,
-}
-dfTable = {
-    '販売数量': units,
-    '仕入金額': cost*amount,
-    '販売経費': costs,
-    '売上金額': sellings,
-    '粗利金額': profits,
-    '損益金額': profitLoss,
-}
-df = pd.DataFrame(dfChart)
-df_ = pd.DataFrame(dfTable)
+for row in index1:
+    number_of_sales = row * case
+    number_of_cost = round((item_cost * purchases) + (valiable_cost * number_of_sales) + (shipping_cost * number_of_sales))
+    amount_of_sales = round(number_of_sales * (item_price / tax_))
+    plofit = round(amount_of_sales - number_of_cost)
+    column1.append("{:,}".format(number_of_sales))
+    column2.append("{:,}".format(number_of_cost))
+    column3.append("{:,}".format(amount_of_sales))
+    column4.append("{:,}".format(plofit))
 
-st.subheader('推移グラフ')
-st.line_chart(df)
-st.subheader('推移一覧表')
-st.table(df_.set_index('販売数量'))
+dict1={'売上数': column1, '仕入金額': column2, '売上金額': column3, '損益': column4}
+
+st.table(pd.DataFrame(data=dict1))
