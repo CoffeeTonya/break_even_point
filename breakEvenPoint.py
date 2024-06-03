@@ -27,13 +27,24 @@ else:
     tax = 0.10
 
 st.sidebar.write("""* * *""")
+salesCost = st.info('販売手数料：' + str("{:,}".format(selling * 0.1)) + '円')
+st.sidebar.write("""* * *""")
 
 varriableCost1 = st.sidebar.number_input('★変動費1/個（円）',  min_value=0, max_value=99999999, step=1)
 varriableCost2 = st.sidebar.number_input('★変動費2/個（円）',  min_value=0, max_value=99999999, step=1)
 varriableCost3 = st.sidebar.number_input('★変動費3/個（円）',  min_value=0, max_value=99999999, step=1)
 
 if cost != 0 and amount != 0 and selling != 0:
-    breakEvenPoint = math.ceil((((cost*amount)*(1+tax))+(varriableCost1*amount)+(varriableCost2*amount)+(varriableCost3*amount))/(selling))
+    totalCosts = (cost*amount)*(1+tax)
+
+    for i in range(0, amount + 1):
+        sales = selling * i
+        costs = cost * i
+        ships = ship * i
+        salesCosts = salesCost * i
+        if (sales >= (totalCosts + ships + salesCosts)):
+            print(i)
+            break
 else:
     breakEvenPoint = 0
 
@@ -71,7 +82,7 @@ dfChart = {
 }
 dfTable = {
     '販売数量': units,
-    '仕入金額': costs,
+    '販売原価': costs,
     '売上金額': sellings,
     '粗利金額': profits,
     '損益金額': profitLoss,
