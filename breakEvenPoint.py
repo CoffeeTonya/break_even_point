@@ -27,7 +27,7 @@ else:
     tax = 0.10
 
 st.sidebar.write("""* * *""")
-salesCost = st.info('販売手数料：' + str("{:,}".format(selling * 0.1)) + '円')
+salesCost = st.sidebar.info('販売手数料：' + str("{:,}".format(selling * 0.1)) + '円')
 st.sidebar.write("""* * *""")
 
 varriableCost1 = st.sidebar.number_input('★変動費1/個（円）',  min_value=0, max_value=99999999, step=1)
