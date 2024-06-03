@@ -45,7 +45,10 @@ else:
     breakEvenPoint = 0
 
 st.title('損益分岐点計算')
-st.subheader('損益分岐点は ' + str(breakEvenPoint) + ' です')
+if breakEvenPoint - amount > 0:
+    st.subheader('損益分岐点はありません')
+else:
+    st.subheader('損益分岐点は ' + str(breakEvenPoint) + ' です')
 
 st.subheader('完売時の合計')
 col7, col8, col9 = st.columns(3)
@@ -54,7 +57,7 @@ with col7:
 with col8:
     sellingTotal = st.info('売上金額：' + str("{:,}".format(selling * amount)) + '円')
 with col9:
-    profitTotal = st.info('粗利金額：' + str("{:,}".format((round(selling - ((cost * (1 + tax)) + (selling * (varriableCost3/100)) + (varriableCost1) + (varriableCost2))) * amount))) + '円')
+    profitTotal = st.info('粗利金額：' + str("{:,}".format((round(selling - ((cost * (1 + tax)) + (selling * (varriableCost3/100)) + (varriableCost1) + (varriableCost2) + (ships) + (commission))) * amount))) + '円')
 
 units = []
 costs = []
