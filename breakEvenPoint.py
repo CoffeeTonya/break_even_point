@@ -33,12 +33,14 @@ commission = st.info('販売手数料：' + str("{:,}".format(selling * 0.1)) + 
 
 st.sidebar.write("""* * *""")
 
+commission = st.info('販売手数料：' + str("{:,}".format(selling * 0.1)) + '円')
+
 varriableCost1 = st.sidebar.number_input('★変動費1/個（円）',  min_value=0, max_value=99999999, step=1)
 varriableCost2 = st.sidebar.number_input('★変動費2/個（円）',  min_value=0, max_value=99999999, step=1)
 varriableCost3 = st.sidebar.number_input('★変動費3/個（円）',  min_value=0, max_value=99999999, step=1)
 
 if cost != 0 and amount != 0 and selling != 0:
-    breakEvenPoint = math.ceil((((cost*amount)*(1+tax))+(varriableCost1*amount)+(varriableCost2*amount)+(varriableCost3*amount) + (ships))/(selling))
+    breakEvenPoint = math.ceil((((cost*amount)*(1+tax))+(varriableCost1*amount)+(varriableCost2*amount)+(varriableCost3*amount) + (ships + commission))/(selling))
 else:
     breakEvenPoint = 0
 
@@ -52,7 +54,7 @@ with col7:
 with col8:
     sellingTotal = st.info('売上金額：' + str("{:,}".format(selling * amount)) + '円')
 with col9:
-    profitTotal = st.info('粗利金額：' + str("{:,}".format((round(selling - ((cost * (1 + tax)) + (selling * (varriableCost3/100)) + (varriableCost1) + (varriableCost2))) * amount))) + '円')
+    profitTotal = st.info('粗利金額：' + str("{:,}".format((round(selling - ((cost * (1 + tax)) + (selling * (varriableCost3/100)) + (varriableCost1) + (varriableCost2) + (ships + commission))) * amount))) + '円')
 
 units = []
 costs = []
