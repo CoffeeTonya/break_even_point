@@ -70,7 +70,7 @@ profits = []
 profitLoss = []
 for i in range(0, amount + 1):
     units.append(i)
-    costs_ = math.floor((i * varriableCost1) + (i * varriableCost2) + (i * selling * varriableCost3/100) + (i * commission) + (i * ships))
+    costs_ = math.floor(((i * cost) * (1 + tax)) + (i * varriableCost1) + (i * varriableCost2) + (i * selling * varriableCost3/100) + (i * commission) + (i * ships))
     costs.append(round(cost*amount))
     sellings.append(round(i * selling))
     profits.append(i * round(selling - (cost * (1 + tax))))
