@@ -18,10 +18,10 @@ if st.sidebar.button('軽減税率対象'):
 else:
     tax = 0.10
 
-# if st.sidebar.button('送料無料対象'):
-#     ships = 550
-# else:
-#     ships = 0
+if st.sidebar.button('送料無料対象'):
+    ships = 550
+else:
+    ships = 0
 
 st.sidebar.write("""* * *""")
 
