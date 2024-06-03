@@ -61,17 +61,20 @@ with col7:
 with col8:
     sellingTotal = st.info('売上金額：' + str("{:,}".format(selling * amount)) + '円')
 with col9:
-    profitTotal = st.info('粗利金額：' + str("{:,}".format((round(selling - ((cost * (1 + tax)) + (selling * (varriableCost3/100)) + (varriableCost1) + (varriableCost2) + (ships) + (commission))) * amount))) + '円')
+    profitTotal = st.info('粗利金額：' + str("{:,}".format((round(selling - ((cost * (1 + tax)) + (selling * (varriableCost3)) + (varriableCost1) + (varriableCost2) + (ships) + (commission))) * amount))) + '円')
 
 units = []
+salesCosts = []
 costs = []
 sellings = []
 profits = []
 profitLoss = []
 for i in range(0, amount + 1):
     units.append(i)
-    costs_ = math.floor(((i * cost) * (1 + tax)) + (i * varriableCost1) + (i * varriableCost2) + (i * selling * varriableCost3/100) + (i * commission) + (i * ships))
-    costs.append(round(cost*amount))
+    salesCosts_ = math.floor(((i * cost) * (1 + tax)) + (i * varriableCost1) + (i * varriableCost2) + (i * selling * varriableCost3) + (i * commission) + (i * ships))
+    salesCosts.append(round(salesCosts_))
+    costs_ = math.floor((i * varriableCost1) + (i * varriableCost2) + (i * selling * varriableCost3) + (i * commission) + (i * ships))
+    costs.append(round(costs_))
     sellings.append(round(i * selling))
     profits.append(i * round(selling - (cost * (1 + tax))))
 
@@ -80,7 +83,7 @@ for i in range(len(costs)):
     profitLoss.append(tmp)
 
 dfChart = {
-    '仕入金額': costs,
+    '販売原価': costs,
     '売上金額': sellings,
 }
 dfTable = {
