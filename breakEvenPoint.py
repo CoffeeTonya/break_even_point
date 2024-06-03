@@ -41,7 +41,7 @@ if cost != 0 and amount != 0 and selling != 0:
         sales = selling * i
         costs = cost * i
         ships = ship * i
-        salesCosts = salesCost * i
+        salesCosts = (selling * 0.1) * 0.1
         if (sales >= (totalCosts + ships + salesCosts)):
             print(i)
             break
