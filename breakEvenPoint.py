@@ -13,6 +13,14 @@ cost = st.sidebar.number_input('①税抜原価（円）',  min_value=0, max_val
 amount = st.sidebar.number_input('②仕入数量（個）',  min_value=0, max_value=99999999, step=1)
 selling = st.sidebar.number_input('③税込売価（円）',  min_value=0, max_value=99999999, step=1)
 
+ship_ = st.sidebar.selectbox('④送料区分', ['送料別', '送料無料', 'メール便無料'])
+if ship_ == '送料別':
+    ship = 0
+elif ship_ == '送料無料':
+    ship = 550
+else:
+    ship = 180
+
 if st.sidebar.button('軽減税率対象'):
     tax = 0.08
 else:
@@ -39,7 +47,7 @@ with col7:
 with col8:
     sellingTotal = st.info('売上金額：' + str("{:,}".format(selling * amount)) + '円')
 with col9:
-    profitTotal = st.info('粗利金額：' + str("{:,}".format((round(selling - ((cost * (1 + tax)) + (selling * (varriableCost3/100)) + (varriableCost1) + (varriableCost2))) * amount))) + '円')
+    profitTotal = st.info('粗利金額：' + str("{:,}".format((round(selling - ((cost * (1 + tax)) + (selling * (varriableCost3)) + (varriableCost1) + (varriableCost2))) * amount))) + '円')
 
 units = []
 costs = []
@@ -48,7 +56,7 @@ profits = []
 profitLoss = []
 for i in range(0, amount + 1):
     units.append(i)
-    costs_ = (math.floor((cost * (1 + tax)) * amount) + (i * varriableCost1) + (i * varriableCost2) + (i * selling * varriableCost3/100))
+    costs_ = (math.floor((cost * (1 + tax)) * amount) + (i * varriableCost1) + (i * varriableCost2) + (i * selling * varriableCost3))
     costs.append(round(costs_))
     sellings.append(round(i * selling))
     profits.append(i * round(selling - (cost * (1 + tax))))
@@ -58,7 +66,7 @@ for i in range(len(costs)):
     profitLoss.append(tmp)
 
 dfChart = {
-    '仕入金額': costs,
+    '販売原価': costs,
     '売上金額': sellings,
 }
 dfTable = {
