@@ -13,6 +13,8 @@ cost = st.sidebar.number_input('①税抜原価（円）',  min_value=0, max_val
 amount = st.sidebar.number_input('②仕入数量（個）',  min_value=0, max_value=99999999, step=1)
 selling = st.sidebar.number_input('③税込売価（円）',  min_value=0, max_value=99999999, step=1)
 
+sellingCost = 0.1
+
 ship_ = st.sidebar.selectbox('④送料区分', ['送料別', '送料無料', 'メール便無料'])
 if ship_ == '送料別':
     ship = 0
@@ -27,7 +29,7 @@ else:
     tax = 0.10
 
 st.sidebar.write("""* * *""")
-salesCost = st.sidebar.info('販売手数料/個：' + str("{:,}".format(selling * 0.1)) + '円')
+salesCost = st.sidebar.info('販売手数料/個：' + str("{:,}".format(selling * sellingCost)) + '円')
 
 varriableCost1 = st.sidebar.number_input('★変動費1/個（円）',  min_value=0, max_value=99999999, step=1)
 varriableCost2 = st.sidebar.number_input('★変動費2/個（円）',  min_value=0, max_value=99999999, step=1)
@@ -40,7 +42,8 @@ if cost != 0 and amount != 0 and selling != 0:
         sales = selling * i
         costs = cost * i
         ships = ship * i
-        salesCosts = (selling * 0.1) * 0.1
+        salesCosts = (selling * i) * sellingCost
+        varriableCosts = (varriableCost1 * i) + (varriableCost2 * i) + (varriableCost3 * i)
         if (sales >= (totalCosts + ships + salesCosts)):
             breakEvenPoint = i
             break
