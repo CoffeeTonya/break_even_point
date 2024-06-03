@@ -29,8 +29,8 @@ elif rank == '送料無料':
 else:
     ships = 180
 
-commission = st.sidebar.info('販売手数料：' + str("{:,}".format(selling * 0.1)) + '円')
-commission1 = st.sidebar.info('販売手数料：' + str("{:,}".format(ships+commission)) + '円')
+commission = selling * 0.1
+commission_ = st.sidebar.info('販売手数料：' + str("{:,}".format(commission)) + '円')
 
 st.sidebar.write("""* * *""")
 
@@ -40,7 +40,7 @@ varriableCost2 = st.sidebar.number_input('★変動費2/個（円）',  min_valu
 varriableCost3 = st.sidebar.number_input('★変動費3/個（円）',  min_value=0, max_value=99999999, step=1)
 
 if cost != 0 and amount != 0 and selling != 0:
-    breakEvenPoint = math.ceil((((cost*amount)*(1+tax))+(varriableCost1*amount)+(varriableCost2*amount)+(varriableCost3*amount))/(selling))
+    breakEvenPoint = math.ceil((((cost*amount)*(1+tax))+(varriableCost1*amount)+(varriableCost2*amount)+(varriableCost3*amount)+(ships+commission))/(selling))
 else:
     breakEvenPoint = 0
 
