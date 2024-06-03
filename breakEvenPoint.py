@@ -13,15 +13,19 @@ cost = st.sidebar.number_input('①税抜原価（円）',  min_value=0, max_val
 amount = st.sidebar.number_input('②仕入数量（個）',  min_value=0, max_value=99999999, step=1)
 selling = st.sidebar.number_input('③税込売価（円）',  min_value=0, max_value=99999999, step=1)
 
-if st.sidebar.button('軽減税率対象', '送料無料'):
+if st.sidebar.button('軽減税率対象'):
     tax = 0.08
 else:
     tax = 0.10
 
-if st.sidebar.button('送料無料対象'):
+rank = st.sidebar.selectbox('送料区分', ['送料別', '送料無料', 'メール便無料'])
+
+if rank == '送料別':
+    ships = 0
+elif rank == '送料無料':
     ships = 550
 else:
-    ships = 0
+    ships = 180
 
 st.sidebar.write("""* * *""")
 
@@ -34,7 +38,7 @@ varriableCost2 = st.sidebar.number_input('★変動費2/個（円）',  min_valu
 varriableCost3 = st.sidebar.number_input('★変動費3/個（円）',  min_value=0, max_value=99999999, step=1)
 
 if cost != 0 and amount != 0 and selling != 0:
-    breakEvenPoint = math.ceil((((cost*amount)*(1+tax))+(varriableCost1*amount)+(varriableCost2*amount)+(varriableCost3*amount))/(selling))
+    breakEvenPoint = math.ceil((((cost*amount)*(1+tax))+(varriableCost1*amount)+(varriableCost2*amount)+(varriableCost3*amount) + (ships)/(selling))
 else:
     breakEvenPoint = 0
 
