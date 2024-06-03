@@ -80,7 +80,7 @@ for i in range(len(costs)):
     profitLoss.append(tmp)
 
 dfChart = {
-    '仕入金額': cost,
+    '仕入金額': costs,
     '売上金額': sellings,
 }
 dfTable = {
