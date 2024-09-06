@@ -48,7 +48,7 @@ if cost != 0 and amount != 0 and selling != 0:
             breakEvenPoint = i
             break
         else:
-            breakEvenPoint = "無し"
+            breakEvenPoint = '"無し"'
 else:
     breakEvenPoint = 0
 
