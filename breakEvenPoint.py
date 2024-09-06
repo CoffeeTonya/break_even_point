@@ -47,6 +47,8 @@ if cost != 0 and amount != 0 and selling != 0:
         if (sales >= (totalCosts + ships + salesCosts)):
             breakEvenPoint = i
             break
+        else:
+            breakEvenPoint = "無し"
 else:
     breakEvenPoint = 0
 
